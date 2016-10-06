@@ -23,7 +23,7 @@ Les calculs mis en oeuvre lors de l'application du PCA reposent essentiellement 
 
 Dans un soucis de clarification (et surtout parce que l'esprit humain n'est pas vraiment habitué à se représenter les choses au delà de trois dimensions), la technique du PCA sera présentée dans un espace en deux dimensions: le jeu de données initial est donc un ensemble de points entièrement définis par leurs coordonnées dans un repère usuel `(i,j)`.
 
-Il faut garder en tête que le PCA repose sur des calculs d'algèbre linéaire valables pour un nombre quelconque de dimensions (on parle aussi *d'algèbre linéaire en dimension finie*) et que le **PCA peut être utilisé sur des données représentées par autant de coordonnées que l'on veut**. En d'autres termes, on peut faire tourner cette méthode aussi bien sur des points en deux dimensions que sur des échantillons sanguins décrits par des centaines de paramètres différents (concentration de telle enzyme, taux de plaquettes...). L'application de cette technique à la compression et à la reconstruction d'images manipule par exemple des *points* qui ont plus de 10 000 coordonnées différentes (*ie* le nombre de pixels dans chaque image) - plus de détails dans la section suivante de ce billet.
+Il faut garder en tête que le PCA repose sur des calculs d'algèbre linéaire valables pour un nombre quelconque de dimensions (on parle aussi *d'algèbre linéaire en dimension finie*) et que le **PCA peut être utilisé sur des données représentées par autant de coordonnées que l'on veut**. En d'autres termes, on peut faire tourner cette méthode aussi bien sur des points en deux dimensions que sur des échantillons sanguins décrits par des centaines de paramètres différents (concentration d'un type d'enzyme, taux de plaquettes...). L'application de cette technique à la compression et à la reconstruction d'images manipule par exemple des *points* qui ont plus de 10 000 coordonnées différentes (*ie* le nombre de pixels dans chaque image) - plus de détails dans la section suivante de ce billet.
 
 Intuitivement, la technique du PCA permet de trouver un repère (de l'espace dans lequel on travaille) qui minimise le degré de corrélation des données. Dans la figure suivante, cela revient à trouver le repère `(u,v)` centré sur le point moyen du jeu de données alors qu'on ne connait que les points dans le repère initial `(i,j)`.
 
@@ -39,10 +39,10 @@ On est donc capable, **en sortie de PCA, de connaître les principaux axes de di
 
 ![dimensionality-reduction](images/dimensionality-reduction.png)
 
-Supposons que notre jeu de données compte 1000 points (de deux coordonnées chacun). Il faut donc 2000 valeurs dans le repère `(i,j)` pour décrire totalement le jeu de données. Après le PCA, il faut 1004 valeurs distinctes:
-- 2 valeurs pour décaler l'origine du repère sur la moyenne des points
-- 2 valeurs pour décrire l'axe `u`
-- 1000 valeurs pour décrire les abscisses de chaque point sur l'axe `u`
+Supposons que notre jeu de données compte `1000` points (de deux coordonnées chacun). Il faut donc `2000` valeurs dans le repère `(i,j)` pour décrire totalement le jeu de données. Après le PCA, il faut `1004` valeurs distinctes:
+- `2` valeurs pour décaler l'origine du repère sur la moyenne des points
+- `2` valeurs pour décrire l'axe `u`
+- `1000` valeurs pour décrire les abscisses de chaque point sur l'axe `u`
 
 On a donc réduit de moitié l'espace nécessaire pour stocker les données. Et le gain est d'autant plus intéressant si les données ont beaucoup des composantes principales qui ne contribuent pas à leur dispersion. Cette technique est souvent nommée "**réduction de complexité**" dans la littérature.
 
@@ -54,7 +54,7 @@ Avant d'aller plus loin, il est nécessaire de poser certains pré-requis qui vo
 - les images manipulées sont à la même résolution
 - le contenu des images est relativement similaire d'une image à l'autre
 
-Afin de prendre en compte les suppositions précédentes, nous travaillerons avec le trombinoscope ci-dessous. Chaque image est à la résolution `92x128` et est en nuances de gris (pour chaque pixel, il y a une seule valeur sur 8 bits qui décrit la nuance de gris). Ce jeu d'images est disponible sur le web, il s'agit d'ailleurs d'un échantillon d'une base d'images bien plus importante utilisée dans un bon nombre d'articles de recherche.
+Afin de prendre en compte les suppositions précédentes, nous travaillerons avec le trombinoscope ci-dessous. Chaque image est à la résolution `92x128` et est en nuances de gris (pour chaque pixel, il y a une seule valeur sur `8` bits qui décrit la nuance de gris). Ce jeu d'images est disponible sur le web, il s'agit d'ailleurs d'un échantillon d'une base d'images bien plus importante utilisée dans un bon nombre d'articles de recherche.
 
 ![face-a](faces/a.jpg)
 ![face-b](faces/b.jpg)
@@ -92,15 +92,15 @@ La reconstruction d'une image du jeu de données est montrée ci-dessous, en app
 ![pr-5](reconstruction/pr-5.jpg)
 ![pr-6](reconstruction/pr-6.jpg)
 
-La reconstruction fonctionne, donc les mathématiques ne mentent pas ! Plus sérieusement, on remarque que les deux dernières reconstructions n'apportent pas énormément de valeur à l'image. On peut donc encoder l'image avec seulement ses quatre principales composantes et conserver ses caractéristiques. Quel est le gain en terme d'espace de stockage, pour toutes les images, en ne gardant que les quatre principales composantes ? Sans PCA, on a besoin de `11776 x 6 = 70656` octets (valeurs de 8 bits).
+La reconstruction fonctionne, donc les mathématiques ne mentent pas ! Plus sérieusement, on remarque que les deux dernières reconstructions n'apportent pas énormément de valeur à l'image. On peut donc encoder l'image avec seulement ses quatre principales composantes et conserver ses caractéristiques. Quel est le gain en terme d'espace de stockage, pour toutes les images, en ne gardant que les quatre principales composantes ? Sans PCA, on a besoin de `6 x 11776 = 70656` octets (valeurs de `8` bits).
 
 Avec PCA, on a besoin de stocker `58904` octets :
-- l'image moyenne et les 4 vecteurs propres, soit `11776 x 5 = 58880`
-- pour chaque image, sa représentation dans le repère des vecteurs propres, soit `6 x 4` valeurs
+- l'image moyenne et les 4 vecteurs propres, soit `11776 x (1 + 4) = 58880`
+- pour chaque image, sa représentation dans le repère des vecteurs propres, soit `6 x 4` octets
 
 Ce qui réalise un taux de compression de `16,63%` sans pour autant perdre le contenu de l'image. La qualité est dégradée évidemment, mais cela a en pratique peu d'impact (en apprentissage automatique notamment) car l'essence même de l'image est préservée.
 
-## Ce qu'il faut retenir
+## En résumé
 
 En guise de rappel de ce que nous avons vu sur le PCA, la matrice de covariance issue du jeu de données initial est diagonalisable. L'algorithme permet de récupérer la base de vecteurs propres de cette matrice de covariance, qui sont les axes qui expliquent la variabilité de la donnée. A chaque vecteur propre correspond une valeur propre, et plus grande est la valeur propre, plus le vecteur propre associé décrit l'axe selon lequel les données sont le plus dispersées (et par conséquent décrit **mieux** le jeu de données).
 
