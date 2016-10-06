@@ -95,7 +95,7 @@ La reconstruction d'une image du jeu de données est montrée ci-dessous, en app
 La reconstruction fonctionne, donc les mathématiques ne mentent pas ! Plus sérieusement, on remarque que les deux dernières reconstructions n'apportent pas énormément de valeur à l'image. On peut donc encoder l'image avec seulement ses quatre principales composantes et conserver ses caractéristiques. Quel est le gain en terme d'espace de stockage, pour toutes les images, en ne gardant que les quatre principales composantes ? Sans PCA, on a besoin de `6 x 11776 = 70656` octets (valeurs de `8` bits).
 
 Avec PCA, on a besoin de stocker `58904` octets :
-- l'image moyenne et les 4 vecteurs propres, soit `11776 x (1 + 4) = 58880`
+- l'image moyenne et les 4 vecteurs propres, soit `11776 x (1 + 4) = 58880` octets
 - pour chaque image, sa représentation dans le repère des vecteurs propres, soit `6 x 4` octets
 
 Ce qui réalise un taux de compression de `16,63%` sans pour autant perdre le contenu de l'image. La qualité est dégradée évidemment, mais cela a en pratique peu d'impact (en apprentissage automatique notamment) car l'essence même de l'image est préservée.
