@@ -1,4 +1,4 @@
-# Analyse en composantes principales
+# Compression, reconstruction d'images et calculs au-delà de la troisième dimension
 
 Ce billet présente l'algorithme PCA (pour Principal Component Analysis, ou encore analyse en composantes principales) qui est une technique mathématique pour identifier et expliquer la corrélation d'un ensemble de données discrètes. Cet article pose les bases de cet algorithme et détaille une de ses applications à la reconstruction d’image.
 
