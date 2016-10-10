@@ -1,12 +1,12 @@
 # Compression, reconstruction d'images et calculs au-delà de la troisième dimension
 
-Ce billet présente l'algorithme PCA (pour Principal Component Analysis, ou encore analyse en composantes principales) qui est une technique mathématique pour identifier et expliquer la corrélation d'un ensemble de données discrètes. Cet article pose les bases de cet algorithme et détaille une de ses applications à la reconstruction d’image.
+Ce billet présente l'algorithme PCA (Principal Component Analysis, ou encore analyse en composantes principales). Il s'agit d'une technique mathématique qui identifie et explique la corrélation d'un ensemble de données discrètes. Cet article pose les bases de cet algorithme et détaille une de ses applications pour la reconstruction d’image.
 
 ## Le PCA : une méthode, plein d'applications !
 
 L'analyse en composantes principales est **une technique d'analyse et de visualisation de données qui est populaire dans un très grand nombre de domaines** qui n'ont, *a priori*, pas grand chose à voir entre eux. En effet, on retrouve l'algorithme PCA en économie, en biologie, mais aussi en physique, en mathématiques (évidemment), en apprentissage automatique (machine learning), sans oublier les sciences sociales ou encore la finance. Pour être bref, PCA est utilisé dans à peu près tous les domaines qui manipulent des données quantifiables et qui ont besoin de faire des statistiques pour trouver une structure, un modèle dans la donnée, afin d'être en mesure d'expliquer leur provenance et leurs fluctuations.
 
-D'autre part, il s'agit d'**une technique qui est relativement simple à appréhender**, pourvu qu'on soit à l'aise avec certains fondamentaux mathématiques (notions de matrices, d'espaces vectoriels et de statistiques). C'est ce qui explique d’ailleurs pourquoi le PCA a été utilisé dans des domains si différents.
+D'autre part, il s'agit d'**une technique qui est relativement simple à appréhender**, pourvu qu'on soit à l'aise avec certains fondamentaux mathématiques (notions de matrices, d'espaces vectoriels et de statistiques). C'est ce qui explique d’ailleurs pourquoi le PCA a été utilisé dans des domaines si différents.
 
 ## Principal Component Analysis
 
@@ -35,7 +35,7 @@ Supposons que notre jeu de données compte `1000` points (de deux coordonnées c
 - `2` valeurs pour décrire l'axe `u` ;
 - `1000` valeurs pour décrire les abscisses de chaque point sur l'axe `u`.
 
-On a donc réduit de moitié l'espace nécessaire pour stocker les données. Le gain est d'autant plus intéressant si les données ont beaucoup des composantes principales qui ne contribuent pas à leur dispersion. Cette technique est souvent nommée "**réduction de complexité**" dans la littérature.
+On a donc réduit de moitié l'espace nécessaire pour stocker les données. Le gain est d'autant plus intéressant si les données ont beaucoup de composantes principales qui ne contribuent pas à leur dispersion. Cette technique est souvent nommée "**réduction de complexité**" dans la littérature.
 
 ## Une application : compression et reconstruction d'images
 
@@ -95,7 +95,7 @@ Ce qui réalise un taux de compression de `16,63%` sans pour autant perdre le co
 
 Nous avons vu que la matrice de covariance issue du jeu de données initial est diagonalisable. L'algorithme permet de récupérer une base de vecteurs propres de cette matrice de covariance ainsi que les valeurs propres associées. **Plus grande est la valeur propre, plus le vecteur propre correspondant décrit l'axe selon lequel les données sont le plus dispersées** (et par conséquent décrit mieux le jeu de données).
 
-Dans ce billet, nous avons introduit les concepts sur lesquels repose le PCA. Cette procédure mathématique cherche à **dé-corréler les données pour en trouver les axes de variation prépondérants**. Comme nous l'avons vu, l'analyse en composantes principales est applicable *a priori* sur des données de provenances diverses. Elle permet d'en déceler la structure, d'expliquer la manière dont elles sont liées les unes avec les autres. Les applications de cette technique sont larges, et nous en avons détaillé une, axée sur la compression et la reconstruction d'un ensemble d'images.
+Dans ce billet, nous avons introduit les concepts sur lesquels repose le PCA. Cette procédure mathématique cherche à **décorréler les données pour en trouver les axes de variation prépondérants**. Comme nous l'avons vu, l'analyse en composantes principales est applicable *a priori* sur des données de provenances diverses. Elle permet d'en déceler la structure, d'expliquer la manière dont elles sont liées les unes avec les autres. Les applications de cette technique sont larges, et nous en avons détaillé une, axée sur la compression et la reconstruction d'un ensemble d'images.
 
 C'est tout pour aujourd'hui !
 
